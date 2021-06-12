@@ -6,7 +6,7 @@ var specialchar = [ "%", "^", "&", "*", "(", ")","!", "@", "#", "$", "+", "-", "
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
-var 
+
 
 
 // Write password to the #password input
