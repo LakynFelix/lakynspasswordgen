@@ -1,45 +1,86 @@
 
 // Assignment code here
-var lowlet = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-var Uplet = ["A", "B" ,"C" ,"D" ,"E" ,"F" ,"G" ,"H" ,"I" ,"J" ,"K" ,"L" ,"M" ,"N" ,"O" ,"P" ,"Q" ,"R" ,"S" ,"T" ,"U" ,"V" ,"W" ,"X" ,"Y" ,"Z"];
-var numbers = [ "0", "1" ,"2" ,"3" ,"4" ,"5" ,"6" ,"7" ,"8" ,"9"]
-var specialchar = [ "%", "^", "&", "*", "(", ")","!", "@", "#", "$", "+", "-", ".", "`", "~", "|", "<", ">", "=", "-", "_"]
  
-
-
-function generatePasswordInfo() {
- 
-  var Length = parseInt(prompt("How many characters would you like your password to have ?"));
-    
-    if(Length < 8 ) {
-      alert("Choose a min of 8 and max of 128 characters.");
-      generatePassword();
-    }
-    if(Length > 128 ) {
-      alert("A Maximum number of 128 characters requried.");
-      generatePassword();
-    }
-    if (isNaN(Length)) {
-      alert("Invalid Please insert a number.");
-      generatePassword();
-    }
-
-
-// Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
+    
+var selectLowerCase;
+var selectUpperCase;
+var selectNumber;
+var selectSpecial;
 
-var question = confirm('Do you want to add Special Characters ?');
+// Set variables  
+var plength = 0;
+var lowerCase = "abcdefghijklmnopqrstuvwxyz";
+// Uppercase conversion
+var upperCase = lowerCase.toUpperCase();
+var numbers = "1234567890";
+var specialCharacter = "!#$%&'()*+,-./:;?@][^_`{|}~'<=>";
+var userPassword = "";
+var passwordGroup = "";
+var plength;
+var selectLowerCase;
+var selectUpperCase;
+var selectNumber;
+var selectSpecial;
 
+// Function writes password to the #password input
+function writePassword() {
+    
+    // Request length of the password
+    plength = parseInt(prompt("Welcome to Password Generator 2020. To begin, please enter a length of your password from 8-128.", ""));
 
-// Write password to the #password input
-  function writePassword() {
-  var password = generatePassword(math.floor(math.random()));
-  var passwordText = document.querySelector("#password");
+    // Require number
+    while (isNaN(plength)) {
+        plength = parseInt(prompt("This is not a number. Please enter a number between 8 - 128.", ""));
+    }
 
-  passwordText.value = password;
+    // Require length    
+    while (plength < 8 || plength > 128) {
+        plength = parseInt(prompt("Enter length of password.* Length must be between 8 - 128 characters", ""));
+    }
 
+    // Confirm lower case letters 
+    selectLowerCase = confirm("Use lower case letters?");
+    // Confirm upper case letters
+    selectUpperCase = confirm("Use upper case letters?");
+    //Confirm numeric characters 
+    selectNumber = confirm("Use numbers?");
+    //Confirm special characters
+    selectSpecial = confirm("Use special characters?");
+
+    var password = generatePassword();
+    document.querySelector("#password").value = password;
+    
 }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-document.getElementById("generate").innerHTML ="New Password";
+
+generate.addEventListener("click", writePassword);
+generatePassword();
+document.getElementById("password").innerHTML = userPassword;
+
+// Password Funtion
+function generatePassword() {
+    userPassword = "";
+    if (selectLowerCase) {
+        passwordGroup += lowerCase;
+    }
+    if (selectUpperCase) {
+        passwordGroup += upperCase;
+    }
+    if (selectNumber) {
+        passwordGroup += numbers;
+    }
+    if (selectSpecial) {
+        passwordGroup += specialCharacter;
+    }
+    for (let i = 0; i < plength; i++) {
+        userPassword += passwordGroup.charAt(
+            Math.floor(Math.random() * passwordGroup.length)
+        );
+    }
+    return userPassword;
+}
+
+
+ 
